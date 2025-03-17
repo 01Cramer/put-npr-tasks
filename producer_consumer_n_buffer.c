@@ -15,10 +15,10 @@ int counter = 0;
 void* prod(void *p){
    int index = 0;
    int i;
-   for (i=1;i<100;i++){
+   for(i=1;i<100;i++){
       pthread_mutex_lock(&mutex);
       while(counter == MAX){
-        pthread_cond_wait(&cond, &mutex);
+         pthread_cond_wait(&cond, &mutex);
       }
       buf[index] = i;
       counter++;
@@ -31,10 +31,10 @@ void* prod(void *p){
 void* kons(void *p){
    int index = 0;
    int i;
-   for (i=1;i<100;i++){
+   for(i=1;i<100;i++){
       pthread_mutex_lock(&mutex);
       while(counter == 0){
-        pthread_cond_wait(&cond, &mutex);
+         pthread_cond_wait(&cond, &mutex);
       }
       printf("%d\n", buf[index]);
       counter--;

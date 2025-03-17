@@ -12,10 +12,10 @@ volatile bool buf_empty = true;
 
 void* prod(void *p){
    int i;
-   for (i=1;i<100;i++){
+   for(i=1;i<100;i++){
       pthread_mutex_lock(&mutex);
       while(!buf_empty){
-        pthread_cond_wait(&cond, &mutex);
+         pthread_cond_wait(&cond, &mutex);
       }
       buf = i;
       buf_empty = false;
@@ -26,15 +26,15 @@ void* prod(void *p){
 
 void* kons(void *p){
    int i;
-   for (i=1;i<100;i++){
-    pthread_mutex_lock(&mutex);
-    while(buf_empty){
-      pthread_cond_wait(&cond, &mutex);
-    }
-    printf("%d\n", buf);
-    buf_empty = true;
-    pthread_cond_signal(&cond);
-    pthread_mutex_unlock(&mutex);
+   for(i=1;i<100;i++){
+      pthread_mutex_lock(&mutex);
+      while(buf_empty){
+         pthread_cond_wait(&cond, &mutex);
+      }
+      printf("%d\n", buf);
+      buf_empty = true;
+      pthread_cond_signal(&cond);
+      pthread_mutex_unlock(&mutex);
    }
 }
 
